@@ -1,0 +1,17 @@
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+}
+
+.title h1 {
+    color: white;
+    padding-left: 1vw;
+}
+
+.App-logo {
+    float: left;
+    height: calc(25px + 2vmin);
+}
