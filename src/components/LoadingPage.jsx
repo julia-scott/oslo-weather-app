@@ -14,10 +14,9 @@ export default function LoadingPage() {
             const apiKey = process.env.REACT_APP_API_KEY;
 
             Promise.all([
-                fetch(`https://api.openweathermap.org/data/2.5/forecast?id=3143244&appid=${apiKey}`),
+                fetch(`https://api.openweathermap.org/data/2.5/forecast?id=3143244&appid=${apiKey}&units=metric`),
                 fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=59.912731&lon=10.74609&appid=${apiKey}&exclude=current,minutely,hourly,alerts&units=metric`)
                 ]).then((responses) => {
-                    // Get a JSON object from each of the responses
                     return Promise.all(responses.map(function (response) {
                         return response.json();
                     }));
