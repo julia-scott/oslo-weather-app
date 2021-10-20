@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from './../images/app_icon.png';
 import './WeatherPage.css';
 import { Card } from 'react-bootstrap';
@@ -8,7 +8,7 @@ import { forEach } from "async";
 
 export default function WeatherPage(props) {
     const dates = getDates();
-
+    const [hourlyDay, setHourlyDay] = useState([]);
     const responsive = {
         superLargeDesktop: {
           breakpoint: { max: 4000, min: 3000 },
@@ -45,8 +45,8 @@ export default function WeatherPage(props) {
                     responsive={responsive}
                     showDots={false}
                     focusOnSelect={false}>
-                    <div>
-                        <Card border="dark" style={{ width: '18rem' }} className="text-center">
+                    <div >
+                        <Card onClick={() => {setHourlyDay(dates[0])}}  border="dark" style={{ width: '18rem' }} className="text-center">
                             <Card.Header>Today</Card.Header>
                             <Card.Body>
                                 <img src={`https://openweathermap.org/img/wn/${props.daily.daily[0].weather[0].icon}@2x.png`} alt="weather"/>
@@ -58,7 +58,7 @@ export default function WeatherPage(props) {
                         </Card>
                     </div>
                     <div>
-                        <Card border="dark" style={{ width: '18rem' }} className="text-center">
+                        <Card onClick={() => {setHourlyDay(dates[1])}} border="dark" style={{ width: '18rem' }} className="text-center">
                             <Card.Header>{dates[1]}</Card.Header>
                             <Card.Body>
                                 <img src={`https://openweathermap.org/img/wn/${props.daily.daily[1].weather[0].icon}@2x.png`} alt="weather"/>
@@ -70,7 +70,7 @@ export default function WeatherPage(props) {
                         </Card>
                     </div>
                     <div>
-                        <Card border="dark" style={{ width: '18rem' }} className="text-center">
+                        <Card onClick={() => {setHourlyDay(dates[2])}} border="dark" style={{ width: '18rem' }} className="text-center">
                             <Card.Header>{dates[2]}</Card.Header>
                             <Card.Body>
                                 <img src={`https://openweathermap.org/img/wn/${props.daily.daily[2].weather[0].icon}@2x.png`} alt="weather"/>
@@ -82,7 +82,7 @@ export default function WeatherPage(props) {
                         </Card>
                     </div>
                     <div>
-                        <Card border="dark" style={{ width: '18rem' }} className="text-center">
+                        <Card onClick={() => {setHourlyDay(dates[3])}} border="dark" style={{ width: '18rem' }} className="text-center">
                             <Card.Header>{dates[3]}</Card.Header>
                             <Card.Body>
                                 <img src={`https://openweathermap.org/img/wn/${props.daily.daily[3].weather[0].icon}@2x.png`} alt="weather"/>
@@ -94,7 +94,7 @@ export default function WeatherPage(props) {
                         </Card>
                     </div>
                     <div>
-                        <Card border="dark" style={{ width: '18rem' }} className="text-center">
+                        <Card onClick={() => {setHourlyDay(dates[4])}} border="dark" style={{ width: '18rem' }} className="text-center">
                             <Card.Header>{dates[4]}</Card.Header>
                             <Card.Body>
                                 <img src={`https://openweathermap.org/img/wn/${props.daily.daily[4].weather[0].icon}@2x.png`} alt="weather"/>
@@ -107,7 +107,7 @@ export default function WeatherPage(props) {
                     </div>
                 </Carousel>
 
-                <TableData day = {dates[0]} myArray = {props.forecast.list}/>
+                <TableData day = {hourlyDay} myArray = {props.forecast.list}/>
                 
             </div>
         </>
@@ -132,7 +132,8 @@ function formatDate(date) {
         weekday: 'short', // long, short, narrow
         day: 'numeric', // numeric, 2-digit
         year: 'numeric', // numeric, 2-digit
-        month: 'short'
+        month: 'short',
+        timeZone: 'CET'
     });
     return (newDate);
 }
@@ -150,7 +151,7 @@ function TableData(props) {
     var myTable = "<thead><tr>";
     newArray.forEach(e => myTable += `<th>${e.hour}</th>`);
     myTable += "</tr></thead><tbody><tr>";
-    newArray.forEach(e => myTable += `<td><img src=https://openweathermap.org/img/wn/${e.icon}.png alt="weather"/><p>${e.max}&deg;C</p><p>${e.max}&deg;C</p></td>`);
+    newArray.forEach(e => myTable += `<td><img src=https://openweathermap.org/img/wn/${e.icon}.png alt="weather"/><p><b>${e.max}&deg;C</b></p><p>${e.min}&deg;C</p></td>`);
     myTable += "</tr></tbody>";
 
     return (
