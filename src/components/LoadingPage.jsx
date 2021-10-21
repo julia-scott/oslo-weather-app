@@ -10,6 +10,7 @@ export default function LoadingPage() {
     const [done, setDone] = useState(undefined);
 
     useEffect(() => {
+        // Make loading screen visible for 2 sec
         setTimeout(() => {
             const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -21,9 +22,9 @@ export default function LoadingPage() {
                         return response.json();
                     }));
                 }).then((data) => {
-                    setForecastData(data[0]);
-                    setDailyData(data[1]);
-                    setDone(true);
+                    setForecastData(data[0]); // Variable for forecast API response
+                    setDailyData(data[1]); // Variable for onecall API response
+                    setDone(true); // State variable, determines when to show loading page
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -33,6 +34,7 @@ export default function LoadingPage() {
     return(
         <>
             {!done ? (
+                // Display loading page when not done fetching data
                 <div className="Load-page">
                     <div className="Load-text">
                         <h1>Fetching weather data for Oslo, Norway</h1>
@@ -41,6 +43,8 @@ export default function LoadingPage() {
                     </div>
                 </div>
             ) : (
+                // Display weather page when done fetching data
+                // Send API responses as props
                 <WeatherPage forecast = {forecastData} daily = {dailyData}/>
             )}
         </>
