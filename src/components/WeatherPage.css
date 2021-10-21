@@ -1,0 +1,33 @@
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    margin: 5vh;
+}
+
+.title h1 {
+    color: white;
+    padding-left: 1vw;
+}
+
+.App-logo {
+    float: left;
+    height: calc(25px + 2vmin);
+}
+
+.card-carousel {
+    align-content: center;
+    width: 70vw;
+    max-width: 870px;
+}
+
+.card-carousel div {
+    cursor: pointer;
+}
+
+.table-head {
+    text-align: left;
+    margin: 5vh 0 2vh 0;
+}
