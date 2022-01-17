@@ -44,6 +44,24 @@ export default function WeatherPage(props) {
                     responsive={responsive}
                     showDots={false}
                     focusOnSelect={false}>
+                    {
+                        props.daily.daily.map(e => {
+                            return (
+                                <div>
+                                    <Card onClick={() => {setHourlyDay(e.dt)}}  border="dark" style={{ width: '18rem' }} className="text-center">
+                                        <Card.Header>{e.dt}</Card.Header>
+                                        <Card.Body>
+                                            <img src={`https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png`} alt="weather"/>
+                                            <Card.Title>
+                                                {Math.round(e.temp.day)}&deg;
+                                            </Card.Title>
+                                        </Card.Body>
+                                        <Card.Footer className="text-muted">{e.weather[0].description}</Card.Footer>
+                                    </Card>
+                                </div>
+                            );
+                        })
+                    }
                     <div>
                         <Card onClick={() => {setHourlyDay(dates[0])}}  border="dark" style={{ width: '18rem' }} className="text-center">
                             <Card.Header>Today</Card.Header>
@@ -105,6 +123,7 @@ export default function WeatherPage(props) {
                         </Card>
                     </div>
                 </Carousel>
+
 
                 <TableData day = {hourlyDay} myArray = {props.forecast.list}/>
                 
