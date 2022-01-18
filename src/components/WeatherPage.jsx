@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import logo from './../images/app_icon.png';
 import './WeatherPage.css';
-import { Card } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import CardComponent from "./CardComponent";
 
 export default function WeatherPage(props) {
     const dates = getDates(); // Returns list of dates of today and next 4 days
-    const [hourlyDay, setHourlyDay] = useState([]); // Determines what day to display hourly forecast
+    console.log(dates);
+    const [hourlyDay, setHourlyDay] = useState(String); // Determines what day to display hourly forecast
     const responsive = { // Display settings for react-multi-carousel
         superLargeDesktop: {
           breakpoint: { max: 4000, min: 3000 },
@@ -62,8 +62,7 @@ export default function WeatherPage(props) {
                     </div>
                 </Carousel>
 
-
-                <TableData day = {hourlyDay} myArray = {props.forecast.list}/>
+                <TableData className = "hourlyTable" day = {hourlyDay} myArray = {props.forecast.list}/>
                 
             </div>
         </>
@@ -98,8 +97,12 @@ function formatDate(date) {
 
 function TableData(props) {
     var date = new Date(props.day); // Selected date
-    date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(); // Format: 2021-10-19
-
+    date = date.toLocaleString('sv-SE', {
+        day: '2-digit',
+        year: 'numeric',
+        month: '2-digit',
+        timeZone: 'CET'
+    });
     const newArray = props.myArray.filter(e => {
         // Filter array to include only the selected date
         return e.dt_txt.includes(date);
@@ -108,18 +111,29 @@ function TableData(props) {
         return { hour: e.dt_txt.split(" ")[1], icon: e.weather[0].icon, max: Math.round(e.main.temp_max), min: Math.round(e.main.temp_min) };
     });
 
-    // Create table html
-    var myTable = "<thead><tr>"; // Header row
-    newArray.forEach(e => myTable += `<th>${e.hour}</th>`); // Hours
-    myTable += "</tr></thead><tbody><tr>"; // Body rows
-    newArray.forEach(e => myTable += `<td><img src=https://openweathermap.org/img/wn/${e.icon}.png alt="weather"/><p><b>${e.max}&deg;C</b></p><p>${e.min}&deg;C</p></td>`); // Icon, max, min
-    myTable += "</tr></tbody>"; // Close tags
-
     return (
-        // Return table with set inner html
-        <div>
+        <>
             <h4 className="table-head">{props.day}</h4>
-            <table dangerouslySetInnerHTML={{ __html: myTable }} className="table table-striped table-bordered table-sm" cellSpacing="0" width="100%"></table>
-        </div>
+            <div className="container">
+                <div className="row">
+                    {
+                        newArray.map(e => {
+                            return(
+                                <div className="col">
+                                    {e.hour}
+                                    <img src={`https://openweathermap.org/img/wn/${e.icon}.png`} alt="weather"/>
+                                    <p>
+                                        <b>{e.max}&deg;C</b>
+                                    </p>
+                                    <p>
+                                        {e.min}&deg;C
+                                    </p>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </>
     );
 }
