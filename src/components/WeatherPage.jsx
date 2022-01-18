@@ -4,6 +4,7 @@ import './WeatherPage.css';
 import { Card } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
+import CardComponent from "./CardComponent";
 
 export default function WeatherPage(props) {
     const dates = getDates(); // Returns list of dates of today and next 4 days
@@ -44,83 +45,20 @@ export default function WeatherPage(props) {
                     responsive={responsive}
                     showDots={false}
                     focusOnSelect={false}>
-                    {
-                        props.daily.daily.map(e => {
-                            return (
-                                <div>
-                                    <Card onClick={() => {setHourlyDay(e.dt)}}  border="dark" style={{ width: '18rem' }} className="text-center">
-                                        <Card.Header>{e.dt}</Card.Header>
-                                        <Card.Body>
-                                            <img src={`https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png`} alt="weather"/>
-                                            <Card.Title>
-                                                {Math.round(e.temp.day)}&deg;
-                                            </Card.Title>
-                                        </Card.Body>
-                                        <Card.Footer className="text-muted">{e.weather[0].description}</Card.Footer>
-                                    </Card>
-                                </div>
-                            );
-                        })
-                    }
-                    <div>
-                        <Card onClick={() => {setHourlyDay(dates[0])}}  border="dark" style={{ width: '18rem' }} className="text-center">
-                            <Card.Header>Today</Card.Header>
-                            <Card.Body>
-                                <img src={`https://openweathermap.org/img/wn/${props.daily.daily[0].weather[0].icon}@2x.png`} alt="weather"/>
-                                <Card.Title>
-                                    {Math.round(props.daily.daily[0].temp.day)}&deg;C
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="text-muted">{props.daily.daily[0].weather[0].description}</Card.Footer>
-                        </Card>
+                    <div onClick={() => {setHourlyDay(dates[0])}}>
+                        <CardComponent date = {dates[0]} image = {props.daily.daily[0].weather[0].icon} temp = {props.daily.daily[0].temp.day} desc = {props.daily.daily[0].weather[0].description}/>
                     </div>
-                    <div>
-                        <Card onClick={() => {setHourlyDay(dates[1])}} border="dark" style={{ width: '18rem' }} className="text-center">
-                            <Card.Header>{dates[1]}</Card.Header>
-                            <Card.Body>
-                                <img src={`https://openweathermap.org/img/wn/${props.daily.daily[1].weather[0].icon}@2x.png`} alt="weather"/>
-                                <Card.Title>
-                                    {Math.round(props.daily.daily[1].temp.day)}&deg;C
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="text-muted">{props.daily.daily[1].weather[0].description}</Card.Footer>
-                        </Card>
+                    <div onClick={() => {setHourlyDay(dates[1])}}>
+                        <CardComponent date = {dates[1]} image = {props.daily.daily[1].weather[0].icon} temp = {props.daily.daily[1].temp.day} desc = {props.daily.daily[1].weather[0].description}/>
                     </div>
-                    <div>
-                        <Card onClick={() => {setHourlyDay(dates[2])}} border="dark" style={{ width: '18rem' }} className="text-center">
-                            <Card.Header>{dates[2]}</Card.Header>
-                            <Card.Body>
-                                <img src={`https://openweathermap.org/img/wn/${props.daily.daily[2].weather[0].icon}@2x.png`} alt="weather"/>
-                                <Card.Title>
-                                    {Math.round(props.daily.daily[2].temp.day)}&deg;C
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="text-muted">{props.daily.daily[2].weather[0].description}</Card.Footer>
-                        </Card>
+                    <div onClick={() => {setHourlyDay(dates[2])}}>
+                        <CardComponent date = {dates[2]} image = {props.daily.daily[2].weather[0].icon} temp = {props.daily.daily[2].temp.day} desc = {props.daily.daily[2].weather[0].description}/>
                     </div>
-                    <div>
-                        <Card onClick={() => {setHourlyDay(dates[3])}} border="dark" style={{ width: '18rem' }} className="text-center">
-                            <Card.Header>{dates[3]}</Card.Header>
-                            <Card.Body>
-                                <img src={`https://openweathermap.org/img/wn/${props.daily.daily[3].weather[0].icon}@2x.png`} alt="weather"/>
-                                <Card.Title>
-                                    {Math.round(props.daily.daily[3].temp.day)}&deg;C
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="text-muted">{props.daily.daily[3].weather[0].description}</Card.Footer>
-                        </Card>
+                    <div onClick={() => {setHourlyDay(dates[3])}}>
+                        <CardComponent date = {dates[3]} image = {props.daily.daily[3].weather[0].icon} temp = {props.daily.daily[3].temp.day} desc = {props.daily.daily[3].weather[0].description}/>
                     </div>
-                    <div>
-                        <Card onClick={() => {setHourlyDay(dates[4])}} border="dark" style={{ width: '18rem' }} className="text-center">
-                            <Card.Header>{dates[4]}</Card.Header>
-                            <Card.Body>
-                                <img src={`https://openweathermap.org/img/wn/${props.daily.daily[4].weather[0].icon}@2x.png`} alt="weather"/>
-                                <Card.Title>
-                                    {Math.round(props.daily.daily[4].temp.day)}&deg;C
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="text-muted">{props.daily.daily[4].weather[0].description}</Card.Footer>
-                        </Card>
+                    <div onClick={() => {setHourlyDay(dates[4])}}>
+                        <CardComponent date = {dates[4]} image = {props.daily.daily[4].weather[0].icon} temp = {props.daily.daily[4].temp.day} desc = {props.daily.daily[4].weather[0].description}/>
                     </div>
                 </Carousel>
 

@@ -8,19 +8,14 @@ export default function LoadingPage() {
     const [dailyData, setDailyData] = useState({});
     const [forecastData, setForecastData] = useState({});
     const [done, setDone] = useState(undefined);
-    var [units, setUnits] = useState(0);
-    const myArray = ['standard', 'imperial', 'metric'];
-
-    console.log(units);
 
     useEffect(() => {
         // Make loading screen visible for 2 sec
         setTimeout(() => {
             const apiKey = process.env.REACT_APP_API_KEY;
-            console.log(units);
             Promise.all([
-                fetch(`https://api.openweathermap.org/data/2.5/forecast?id=3143244&appid=${apiKey}&units=${myArray[units]}`),
-                fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=59.912731&lon=10.74609&appid=${apiKey}&exclude=current,minutely,hourly,alerts&units=${myArray[units]}`)
+                fetch(`https://api.openweathermap.org/data/2.5/forecast?id=3143244&appid=${apiKey}`),
+                fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=59.912731&lon=10.74609&appid=${apiKey}&exclude=current,minutely,hourly,alerts`)
                 ]).then((responses) => {
                     return Promise.all(responses.map(function (response) {
                         return response.json();
@@ -33,7 +28,7 @@ export default function LoadingPage() {
                     console.log(error);
                 });
         }, 2000);
-    }, [units]);
+    }, []);
 
     return(
         <>
@@ -47,17 +42,10 @@ export default function LoadingPage() {
                     </div>
                 </div>
             ) : (
+                // Display weather page when done fetching data
+                // Send API responses as props
                 <div>
-                    // Display weather page when done fetching data
-                    // Send API responses as props
                     <WeatherPage forecast = {forecastData} daily = {dailyData}/>
-                    <button onClick={() => {
-                            units += 1;
-                            if(units === 3) {
-                                units = 0;
-                            }
-                            setUnits(units);
-                        }} type="button" class="btn btn-primary btn-sm">Switch Units</button>
                 </div>
             )}
         </>
